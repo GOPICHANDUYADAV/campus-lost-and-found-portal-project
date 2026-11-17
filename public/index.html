@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campus Lost & Found | Sai University</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">LF</span><span>Campus<span class="brand-light">Lost & Found</span></span></a>
+    <nav>
+      <a href="#listings">Browse items</a>
+      <a href="#report" class="auth-link">Report item</a>
+      <button id="dashboardBtn" class="nav-btn hidden">My dashboard</button>
+      <button id="adminBtn" class="nav-btn hidden">Admin</button>
+      <button id="loginBtn" class="nav-btn">Login</button>
+      <button id="registerBtn" class="primary small">Sign up</button>
+      <button id="logoutBtn" class="nav-btn hidden">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">SAI UNIVERSITY · CAMPUS COMMUNITY</p>
+        <h1>Lost something?<br><span>Let's find it together.</span></h1>
+        <p class="hero-text">A simple place to report lost belongings, share found items, and reconnect people with what matters.</p>
+        <div class="hero-actions">
+          <a class="primary" href="#listings">Browse listings</a>
+          <a class="secondary" href="#report">Report an item</a>
+        </div>
+        <div class="trust-line"><span class="dot"></span> Made for our campus community</div>
+      </div>
+      <div class="hero-art" aria-label="Illustration of lost and found items">
+        <div class="art-card card-one"><span>🎒</span><b>Backpack</b><small>Last seen · Library</small></div>
+        <div class="art-card card-two"><span>🔑</span><b>Keys found</b><small>Near · Cafeteria</small></div>
+        <div class="art-orbit">↗</div>
+        <div class="art-caption">Every item has<br>a way back home.</div>
+      </div>
+    </section>
+
+    <section class="stats-strip">
+      <div><strong id="itemCount">—</strong><span>Open listings</span></div>
+      <div><strong>24/7</strong><span>Browse anytime</span></div>
+      <div><strong>One campus</strong><span>One helpful community</span></div>
+    </section>
+
+    <section id="listings" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE COMMUNITY BOARD</p><h2>Recently reported items</h2></div>
+        <span class="muted">Find a match or help someone out.</span>
+      </div>
+      <div class="filters">
+        <input id="searchInput" type="search" placeholder="Search item, details or location..." />
+        <select id="typeFilter"><option value="">All types</option><option value="lost">Lost</option><option value="found">Found</option></select>
+        <select id="categoryFilter">
+          <option value="">All categories</option><option>Electronics</option><option>Personal Items</option><option>Books & Notes</option><option>Accessories</option><option>ID Cards</option><option>Other</option>
+        </select>
+        <select id="sortFilter"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+        <button id="searchBtn" class="primary">Search</button>
+      </div>
+      <div id="itemsGrid" class="items-grid"><div class="empty">Loading listings...</div></div>
+    </section>
+
+    <section id="report" class="section report-section">
+      <div class="section-heading"><div><p class="eyebrow">HELP THE COMMUNITY</p><h2>Report a lost or found item</h2></div></div>
+      <form id="itemForm" class="form-card">
+        <div class="form-intro"><h3>Item details</h3><p>Sign in first, then share clear details so the right person can recognise the item.</p></div>
+        <div class="form-grid">
+          <label>Listing type<select name="type" required><option value="lost">I lost an item</option><option value="found">I found an item</option></select></label>
+          <label>Item name<input name="title" required maxlength="100" placeholder="e.g. Black wallet" /></label>
+          <label>Category<select name="category" required><option value="">Choose category</option><option>Electronics</option><option>Personal Items</option><option>Books & Notes</option><option>Accessories</option><option>ID Cards</option><option>Other</option></select></label>
+          <label>Location<input name="location" required placeholder="e.g. Library, Block A" /></label>
+          <label>Date lost/found<input name="itemDate" type="date" required /></label>
+          <label>Optional image<input name="image" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+          <label class="full">Description<textarea name="description" rows="4" required maxlength="1000" placeholder="Add colour, brand, identifying marks or other useful details..."></textarea></label>
+        </div>
+        <button class="primary" type="submit">Submit report</button><p id="itemMessage" class="form-message"></p>
+      </form>
+    </section>
+
+    <section id="dashboard" class="section hidden">
+      <div class="section-heading"><div><p class="eyebrow">YOUR ACTIVITY</p><h2>My dashboard</h2></div></div>
+      <div class="dashboard-columns">
+        <div><h3>My listings</h3><div id="myListings" class="stack-list"></div></div>
+        <div><h3>My claims</h3><div id="myClaims" class="stack-list"></div></div>
+        <div><h3>Claims on my items</h3><div id="receivedClaims" class="stack-list"></div></div>
+      </div>
+    </section>
+
+    <section id="adminPanel" class="section hidden">
+      <div class="section-heading"><div><p class="eyebrow">PORTAL MANAGEMENT</p><h2>Admin dashboard</h2></div></div>
+      <div id="adminStats" class="admin-stats"></div>
+      <h3>All reported items</h3><div id="adminItems" class="stack-list"></div>
+      <h3>All claims</h3><div id="adminClaims" class="stack-list"></div>
+    </section>
+  </main>
+
+  <footer><div class="footer-brand">Campus Lost & Found</div><p>Helping Sai University students reconnect with their belongings.</p><small>Academic Year 2026–2027 · Student Project</small></footer>
+
+  <div id="authModal" class="modal hidden">
+    <div class="modal-card"><button class="close" id="closeModal">×</button><p class="eyebrow">WELCOME TO THE PORTAL</p><h2 id="authTitle">Login</h2>
+      <form id="authForm">
+        <label id="nameWrap" class="hidden">Full name<input name="name" /></label>
+        <label>Email<input name="email" type="email" required placeholder="you@example.com" /></label>
+        <label>Password<input name="password" type="password" required minlength="8" placeholder="At least 8 characters" /></label>
+        <button id="authSubmit" class="primary full-width">Login</button>
+      </form>
+      <p id="authMessage" class="form-message"></p>
+      <p class="switch-auth" id="switchAuth">New here? <button type="button">Create an account</button></p>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

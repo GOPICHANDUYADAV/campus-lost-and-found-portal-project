@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{baseUrl}}/api/auth/login"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"email":"student.demo@saiuniversity.edu.in","password":"Student@123"}'
+order: 3000

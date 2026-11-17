@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{baseUrl}}/api/claims"
+method: POST
+headers:
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+body:
+  type: text
+  content: '{"itemId":"{{itemId}}","message":"I can identify the item by a unique mark."}'
+order: 9000

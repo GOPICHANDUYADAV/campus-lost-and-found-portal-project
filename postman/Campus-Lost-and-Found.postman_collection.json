@@ -1,0 +1,243 @@
+{
+  "info": {
+    "name": "Campus Lost and Found Portal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "itemId",
+      "value": ""
+    },
+    {
+      "key": "claimId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/health"
+      }
+    },
+    {
+      "name": "Register student",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"Test Student\",\"email\":\"test.student@example.com\",\"password\":\"TestPass123\"}"
+        },
+        "url": "{{baseUrl}}/api/auth/register"
+      }
+    },
+    {
+      "name": "Login student",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"email\":\"student.demo@saiuniversity.edu.in\",\"password\":\"Student@123\"}"
+        },
+        "url": "{{baseUrl}}/api/auth/login"
+      }
+    },
+    {
+      "name": "Get current user (authorized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/auth/me"
+      }
+    },
+    {
+      "name": "Get all open items",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items"
+      }
+    },
+    {
+      "name": "Search and sort items",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items?q=wallet&sort=newest"
+      }
+    },
+    {
+      "name": "Get one item",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/items/{{itemId}}"
+      }
+    },
+    {
+      "name": "Create item (authorized)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "title",
+              "value": "Test Umbrella",
+              "type": "text"
+            },
+            {
+              "key": "type",
+              "value": "found",
+              "type": "text"
+            },
+            {
+              "key": "category",
+              "value": "Accessories",
+              "type": "text"
+            },
+            {
+              "key": "description",
+              "value": "Black umbrella found near library",
+              "type": "text"
+            },
+            {
+              "key": "location",
+              "value": "Library",
+              "type": "text"
+            },
+            {
+              "key": "itemDate",
+              "value": "2026-11-12",
+              "type": "text"
+            }
+          ]
+        },
+        "url": "{{baseUrl}}/api/items"
+      }
+    },
+    {
+      "name": "Submit claim (authorized)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"itemId\":\"{{itemId}}\",\"message\":\"I can identify the item by a unique mark.\"}"
+        },
+        "url": "{{baseUrl}}/api/claims"
+      }
+    },
+    {
+      "name": "Unauthorized create item (expected 401)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\":\"No token item\"}"
+        },
+        "url": "{{baseUrl}}/api/items"
+      }
+    },
+    {
+      "name": "Invalid registration (expected 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\":\"\",\"email\":\"not-an-email\",\"password\":\"123\"}"
+        },
+        "url": "{{baseUrl}}/api/auth/register"
+      }
+    },
+    {
+      "name": "Get my listings (authorized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/items/mine"
+      }
+    },
+    {
+      "name": "Get my claims (authorized)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/claims/mine"
+      }
+    },
+    {
+      "name": "Admin stats (student token expected 403)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/api/admin/stats"
+      }
+    }
+  ]
+}

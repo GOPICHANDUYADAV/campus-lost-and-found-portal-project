@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{baseUrl}}/api/items?q=wallet&sort=newest"
+method: GET
+queryParams:
+  q: wallet
+  sort: newest
+order: 6000
